@@ -58,10 +58,3 @@ if media_files:
     result = qa_chain({"query": str(value)})
     if click:
         tab3.write(result['result'])
-
-
-
-
-
-
-
