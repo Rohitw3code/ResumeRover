@@ -1,6 +1,5 @@
 import os
 import openai
-import sys
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -11,32 +10,32 @@ from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import PyPDFLoader
 
-# openai.api_key  = os.environ['OPENAI_API_KEY']
+# Initialize OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# Streamlit UI setup
 st.title('ResumeRover')
 st.header('Resume Filtering & Insights')
 
-tab1, tab2, tab3 = st.tabs([ "Resume Upload" ,"Chat with Resume", "Insights About the Resume" ])
+tab1, tab2, tab3 = st.tabs(["Resume Upload", "Chat with Resume", "Insights About the Resume"])
 
 with tab1:
     st.subheader("Resume Upload")
+    media_files = st.file_uploader("Upload multiple media files", accept_multiple_files=True, type=["pdf"])
+
 with tab2:
     st.subheader("Chat with Resume")
-    value = tab2.text_area('Input the Query you to know about the uploaded resumes')
-    click = tab2.button('submit')
+    value = st.text_area('Input the Query you want to know about the uploaded resumes')
+    click = st.button('Submit')
+
 with tab3:
     st.subheader("Insights About the Resume")
 
-media_files = tab1.file_uploader("Upload multiple media files", accept_multiple_files=True)
-
 if media_files:
-    for media_file in media_files:
-        loader = [PyPDFLoader(media_file.name) for name in media_files]
-
     docs = []
-    for load in loader:
-        docs.extend(load.load())
+    for media_file in media_files:
+        loader = PyPDFLoader(media_file)  # Load the file directly from the uploaded file
+        docs.extend(loader.load())
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=300,
@@ -55,6 +54,6 @@ if media_files:
         retriever=vectordb_fb.as_retriever()
     )
 
-    result = qa_chain({"query": str(value)})
-    if click:
+    if click and value:
+        result = qa_chain({"query": value})
         tab3.write(result['result'])
