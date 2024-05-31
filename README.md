@@ -1,6 +1,3 @@
-Sure, here's the code for your `README.md` file:
-
-```markdown
 # Resume Rover
 
 Welcome to Resume Rover! This platform is designed to streamline the recruitment process for HR professionals by leveraging advanced semantic search algorithms and language models (LLMs) to find the best candidates for job openings.
@@ -76,6 +73,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 
 Thank you for using Resume Rover! We hope this tool helps you find the perfect candidates for your job openings efficiently and effectively.
-```
-
-You can copy and paste this content into your `README.md` file.
