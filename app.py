@@ -33,7 +33,9 @@ with tab3:
 
 if media_files:
     docs = []
+    print("Media Files : ",media_files)
     for media_file in media_files:
+        print("Files : ",media_file)
         loader = PyPDFLoader(media_file.name)  # Load the file directly from the uploaded file
         docs.extend(loader.load())
 
