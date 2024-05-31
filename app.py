@@ -14,22 +14,22 @@ from langchain.document_loaders import PyPDFLoader
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Streamlit UI setup
-st.title('ResumeRover')
-st.header('Resume Filtering & Insights')
+st.title('AI SmartBear Product Saleman')
+st.header('Product assistance')
 
-tab1, tab2, tab3 = st.tabs(["Resume Upload", "Chat with Resume", "Insights About the Resume"])
+tab1, tab2, tab3 = st.tabs(["Available Products Data", "Product Query", "Products Suggestion"])
 
 with tab1:
-    st.subheader("Resume Upload")
+    st.subheader("Products Data Upload")
     media_files = st.file_uploader("Upload multiple media files", accept_multiple_files=True, type=["pdf"])
 
 with tab2:
-    st.subheader("Chat with Resume")
-    value = st.text_area('Input the Query you want to know about the uploaded resumes')
+    st.subheader("Ask product query")
+    value = st.text_area('Enter your software testing requirement')
     click = st.button('Submit')
 
 with tab3:
-    st.subheader("Insights About the Resume")
+    st.subheader("SmartBear products fullfilling your requirements")
 
 if media_files:
     docs = []

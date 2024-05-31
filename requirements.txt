@@ -14,3 +14,4 @@ typing_extensions==4.11.0
 urllib3==2.0.4
 uvicorn==0.27.1
 pydantic
+streamlit==1.35.0
