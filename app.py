@@ -34,7 +34,7 @@ with tab3:
 if media_files:
     docs = []
     for media_file in media_files:
-        loader = PyPDFLoader(media_file)  # Load the file directly from the uploaded file
+        loader = PyPDFLoader(media_file.name)  # Load the file directly from the uploaded file
         docs.extend(loader.load())
 
     text_splitter = RecursiveCharacterTextSplitter(
