@@ -14,7 +14,7 @@ from langchain.document_loaders import PyPDFLoader
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Streamlit UI setup
-st.title('AI SmartBear Product Saleman')
+st.title('AI SmartBear Product Salesman')
 st.header('Product assistance')
 
 tab1, tab2, tab3 = st.tabs(["Available Products Data", "Product Query", "Products Suggestion"])
@@ -34,7 +34,7 @@ with tab3:
 if media_files:
     docs = []
     for media_file in media_files:
-        loader = PyPDFLoader(media_file)  # Load the file directly from the uploaded file
+        loader = PyPDFLoader(media_file.name)  # Load the file directly from the uploaded file
         docs.extend(loader.load())
 
     text_splitter = RecursiveCharacterTextSplitter(
@@ -54,6 +54,24 @@ if media_files:
         retriever=vectordb_fb.as_retriever()
     )
 
+    # if click and value:
+    #     result = qa_chain({"query": value})
+    #     tab3.write(result['result'])
+
+    result = qa_chain({"query": value})
+
+    msg = "You are data formatter and present data product wise for each product by showing product name as heading and then product details in bullet points. Suggest only SmartBear products." + value + result['result']
+
+    formatted_result = openai.completions.create(
+        model="gpt-3.5-turbo-instruct",
+        prompt=msg,
+        temperature=0.9,
+        max_tokens=150,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=['###']
+    )
+
     if click and value:
-        result = qa_chain({"query": value})
-        tab3.write(result['result'])
+        tab3.write(formatted_result.choices[0].text)
